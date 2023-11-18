@@ -7,9 +7,11 @@ class ChatProvider extends ChangeNotifier {
   final getYesNoAnswer = GetYesNoAnswer();
 
   List<Message> messageList = [
-    Message(text: 'Holas', fromWho: FromWho.me),
-    Message(text: 'Ya Regresaste', fromWho: FromWho.me),
+    Message(text: 'Iniciando Conversación', fromWho: FromWho.me),
+    //Message(text: 'Ya Regresaste', fromWho: FromWho.me),
   ];
+
+  String urlServidor = "";
 
   Future<void> sendMessage(String text) async {
     if (text.isEmpty) return;

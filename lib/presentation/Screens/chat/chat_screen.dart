@@ -21,8 +21,21 @@ class ChatScreen extends StatelessWidget {
           ),
         ),
         //title: const Text('Mi Amor 💙'),
-        title: const Text('Cargando...'),
+        title: const Text('Chat Tributario'),
         centerTitle: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.cloud_done),
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (BuildContext context) {
+                    return MyModalContent();
+                  });
+            },
+          )
+        ],
       ),
       body: _ChatView(),
     );
@@ -56,6 +69,48 @@ class _ChatView extends StatelessWidget {
             MessageFieldBox(
               //onValue: (value) => chatProvider.sendMessage(value),
               onValue: chatProvider.sendMessage,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MyModalContent extends StatelessWidget {
+  final TextEditingController _textController = TextEditingController();
+
+  MyModalContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final chatProvider = context.watch<ChatProvider>();
+    _textController.text = chatProvider.urlServidor;
+
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 16.0),
+            TextFormField(
+              controller: _textController,
+              decoration: const InputDecoration(
+                labelText: 'Url Servidor:',
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                // Acción a realizar al presionar el botón
+                String TextIngresado = _textController.text;
+                chatProvider.urlServidor = TextIngresado;
+                Navigator.of(context).pop(); // Cierra el modal
+              },
+              child: const Text('Guardar Cambios'),
             ),
           ],
         ),
