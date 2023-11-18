@@ -13,22 +13,22 @@ class ChatProvider extends ChangeNotifier {
 
   String urlServidor = "";
 
-  Future<void> sendMessage(String text) async {
+  Future<void> sendMessage(String text, String purlServer) async {
     if (text.isEmpty) return;
 
     final newMessage = Message(text: text, fromWho: FromWho.me);
     messageList.add(newMessage);
 
-    if (text.endsWith('?')) {
-      herReply();
-    }
+    //if (text.endsWith('?')) {
+    herReply(text, purlServer);
+    //}
     //Refresca hubo un cambio en el providers
     notifyListeners();
     moveScrollToBottom();
   }
 
-  Future<void> herReply() async {
-    final herMessage = await getYesNoAnswer.getAnswer();
+  Future<void> herReply(String pPregunta, String pUrlServerIA) async {
+    final herMessage = await getYesNoAnswer.getAnswer(pPregunta, pUrlServerIA);
     messageList.add(herMessage);
     notifyListeners();
 

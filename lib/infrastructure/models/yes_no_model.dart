@@ -1,7 +1,7 @@
 import 'package:yes_no_app/domain/entities/message.dart';
 
 class YesNoModel {
-  final String answer;
+  String answer;
   final bool forced;
   final String image;
 
@@ -10,6 +10,11 @@ class YesNoModel {
     required this.forced,
     required this.image,
   });
+
+  // Setter para modificar el valor del atributo
+  set setRespuesta(String nuevoValor) {
+    answer = nuevoValor;
+  }
 
   factory YesNoModel.fromJsonMap(Map<String, dynamic> json) => YesNoModel(
         answer: json["answer"],
@@ -23,7 +28,8 @@ class YesNoModel {
         "image": image,
       };
   Message toMessageEntity() => Message(
-      text: answer == 'yes' ? 'Si' : 'No',
+      //text: answer == 'yes' ? 'Si' : 'No',
+      text: answer,
       fromWho: FromWho.hers,
       imageUrl: image);
 }
